@@ -1,0 +1,22 @@
+.pagination_container{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.pagination_block{
+    width: 40px;
+    margin: 10px 15px;
+    padding: 10px;
+    border: 1px solid aquamarine;
+    cursor: pointer;
+}
+
+.pagination_block:hover{
+    opacity: 0.7;
+}
+
+.current{
+    border: 1px solid red;
+}

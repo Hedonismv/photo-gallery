@@ -1,24 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import FileUploadForm from "./Components/FileUploadForm";
+import ImageList from "./Components/ImageList";
+import {useState} from "react";
+import {FileContext} from "./context/FileContext";
+import {PaginationContext} from "./context/PaginationContext";
 
 function App() {
+	const [file, setFile] = useState(null)
+	const [currentPage, setCurrentPage] = useState(1)
+	const [totalPages, setTotalPages] = useState(null)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+	<FileContext.Provider value={[file, setFile]}>
+		<PaginationContext.Provider value={[currentPage, setCurrentPage, totalPages, setTotalPages]}>
+			<div className="App">
+				<h1>Download your Images</h1>
+				<FileUploadForm/>
+				<ImageList/>
+			</div>
+		</PaginationContext.Provider>
+	</FileContext.Provider>
   );
 }
 
