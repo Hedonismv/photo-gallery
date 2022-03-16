@@ -1,0 +1,12 @@
+.header_container{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 80px;
+    background-color: antiquewhite;
+}
+
+.header_auth{
+    cursor: pointer;
+}
