@@ -1,7 +1,8 @@
 import React, {useContext, useState} from 'react';
 import ProgressBar from "./ProgressBar";
 import {FileContext} from "../context/FileContext";
-import {AiOutlinePlusCircle} from 'react-icons/ai'
+import {AiOutlinePlusCircle} from 'react-icons/ai';
+import './gallery.css';
 
 const FileUploadForm = () => {
 	// const [file, setFile] = useState(null)

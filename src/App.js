@@ -1,26 +1,59 @@
 import './App.css';
-import FileUploadForm from "./Components/FileUploadForm";
-import ImageList from "./Components/ImageList";
-import {useState} from "react";
+import Header from "./Components/Header/Header";
+import {useAuthState} from "react-firebase-hooks/auth";
+import {useCollection, useCollectionData} from 'react-firebase-hooks/firestore'
+import { auth} from "./firebase/config";
+import {BrowserRouter} from "react-router-dom";
 import {FileContext} from "./context/FileContext";
-import {PaginationContext} from "./context/PaginationContext";
+import {useEffect, useState} from "react";
+import {useDispatch} from "react-redux";
+import {setUserAuth} from "./redux/actions/authActions";
+import PrivateRoutes from "./routes/PrivateRoutes";
+import PublicRoutes from "./routes/PublicRoutes";
+
 
 function App() {
-	const [file, setFile] = useState(null)
-	const [currentPage, setCurrentPage] = useState(1)
-	const [totalPages, setTotalPages] = useState(null)
 
-  return (
-	<FileContext.Provider value={[file, setFile]}>
-		<PaginationContext.Provider value={[currentPage, setCurrentPage, totalPages, setTotalPages]}>
-			<div className="App">
-				<h1>Download your Images</h1>
-				<FileUploadForm/>
-				<ImageList/>
+	const dispatch = useDispatch()
+	const [file, setFile] = useState(null)
+
+	// const [value, loading, error, snapshot] = useCollectionData(
+	// 	collection(projectFirestore, 'images')
+	// )
+	// console.log(value, loading, error, snapshot)
+
+	const [user, loading, error] = useAuthState(auth)
+
+	useEffect(() => {
+		if(user){
+			dispatch(setUserAuth(user))
+		}
+	},[user, dispatch])
+
+	if(loading){
+		return (
+			<div>
+				<h1>Loading...</h1>
 			</div>
-		</PaginationContext.Provider>
-	</FileContext.Provider>
-  );
+		)
+	}
+
+	if(error){
+		return (
+			<div>
+				<h1>Error</h1>
+			</div>
+		)
+	}
+
+	return (
+		<FileContext.Provider value={[file, setFile]}>
+			<BrowserRouter>
+				<Header/>
+				{user ? <PrivateRoutes/> : <PublicRoutes/>}
+			</BrowserRouter>
+		</FileContext.Provider>
+	);
 }
 
 export default App;
