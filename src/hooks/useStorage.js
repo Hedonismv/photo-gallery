@@ -2,12 +2,15 @@ import {useEffect, useState} from "react";
 import {ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {projectFirestore, projectStorage, timestamp} from "../firebase/config";
 import {collection, addDoc} from 'firebase/firestore'
+import { getIdTokenResult} from 'firebase/auth'
+import {useSelector} from "react-redux";
 
 
 export const useStorage = (file) => {
 	const [progress, setProgress] = useState(0);
 	const [error, setError] = useState(null);
 	const [url, setUrl] = useState(null);
+	const {loggedUser} = useSelector(state => state.authReducer)
 
 	useEffect(() => {
 		const storageRef = ref(projectStorage, 'images/' + file.name);
@@ -50,6 +53,11 @@ export const useStorage = (file) => {
 				const createdAt = Date.now().toFixed()
 				addDoc(firestoreRef, {
 					url: downloadURL,
+					authorId: loggedUser.uid,
+					authorDisplayName: loggedUser.displayName,
+					authorEmail: loggedUser.email,
+					authorPhotoUrl: loggedUser.photoURL,
+					likes: 0,
 					createdAt
 				})
 					.then((res) => {
