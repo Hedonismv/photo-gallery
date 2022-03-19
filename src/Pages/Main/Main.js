@@ -1,5 +1,5 @@
 import React from 'react';
-import FileUploadForm from "../../Components/FileUploadForm";
+import FileUploadForm from "../../Components/FileUploadForm/FileUploadForm";
 
 const Main = () => {
 	return (
