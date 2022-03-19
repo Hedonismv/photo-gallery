@@ -17,7 +17,11 @@ import Girl from '../../testImages/nicholas-ng-lN-fwWY2UxY-unsplash.jpg';
 import NoteBook from '../../testImages/windows-aeVCU-vit3o-unsplash.jpg';
 import WindowImage from '../../testImages/surface-nC35efkdYBg-unsplash.jpg';
 import Car from '../../testImages/nastaran-taghipour-4O7Gfyfoo1Q-unsplash.jpg';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {useCollectionData} from "react-firebase-hooks/firestore";
+import {collection} from "firebase/firestore";
+import {projectFirestore} from "../../firebase/config";
+import {setValues} from "../../redux/actions/authActions";
 
 const ImageList = () => {
 	// const [files, setFiles] = useState([])
@@ -26,111 +30,118 @@ const ImageList = () => {
 	// const [pages, setPages] = useState([])
 	// const [currentPage, setCurrentPage, totalPages, setTotalPages] = useContext(PaginationContext)
 
-	const {loggedUser} = useSelector(state => state.authReducer)
+	const [firstColumn, setFirstColumn] = useState([])
+	const [secondColumn, setSecondColumn] = useState([])
+	const [thirdColumn, setThirdColumn] = useState([])
 
-	const storage = getStorage();
+	const dispatch = useDispatch()
 
-// Create a reference under which you want to list
-// 	const listRef = ref(storage, 'images/');
-//
-//
-// 	const changePage = () => {
-// 		let second = currentPage * 6
-// 		let first = second - 6
-// 		const slicedFiles = curFiles.slice(first,second)
-// 		setFiles(slicedFiles)
-// 	}
-//
-// 	useEffect(() => {
-// 		changePage();
-// 	}, [curFiles])
-//
-//
-// 	useEffect(() => {
-// 		const fetchImages = async () => {
-// 			const response = await listAll(listRef)
-//
-//
-// 			const pages = Math.ceil(response.items.length / 6)
-// 			setTotalPages(response.items.length)
-// 			const pageArr = []
-// 			for (let i = 1; i <= pages; i++){
-// 				pageArr.push(i)
-// 			}
-// 			setPages(pageArr)
-//
-//
-// 			let urlPromises = response.items.map(imageRef => getDownloadURL(imageRef))
-//
-// 			return Promise.all(urlPromises)
-// 		}
-// 		const loadImages = async () => {
-// 			const urls = await fetchImages();
-// 			setCurFiles(urls)
-// 		}
-// 		loadImages();
-// 	},[file, currentPage])
+	const [value, loading, error, snapshot] = useCollectionData(
+		collection(projectFirestore, 'images')
+	)
+	console.log(value, loading, error, snapshot)
 
-// 	<div className={'gallery_container'}>
-// 		{files.map(imgUrl =>
-// 				<div key={imgUrl} className={'main_item_container'}>
-// 					<div className={'main_item_image'}>
-// 						<img className={'gallery_img'} src={imgUrl} alt={'galleryImg'}/>
-// 						<a href={'/'} className={'main_image_btn btn btn_primary'}>Download</a>
-// 					</div>
-// 				</div>
-// 			)}
-// </div>
+	const splitArray = () => {
+		//find ceil number
+		let stateNumber = Math.ceil(value.length / 3)
+		// Take the arrays
+		let firstColumn = value.slice(0, stateNumber)
+		setFirstColumn(firstColumn)
+		let secondColumn = value.slice(stateNumber, stateNumber*2)
+		setSecondColumn(secondColumn)
+		let thirdColumn = value.slice(stateNumber*2, stateNumber*3)
+		setThirdColumn(thirdColumn)
+
+		console.log(firstColumn, secondColumn, thirdColumn)
+	}
+
+
+	useEffect(() => {
+		if(value){
+			dispatch(setValues(value))
+			splitArray()
+		}
+	},[value, dispatch])
+
+	if(loading){
+		return (
+			<div>
+				<h1>Loading...</h1>
+			</div>
+		)
+	}
+
+	if(error){
+		return (
+			<div>
+				<h1>Error</h1>
+			</div>
+		)
+	}
 
 	return (
 		<div className={'container adaptive_padding'}>
 			<div>
 				<div className={'image_list_grid'}>
 					<div className={'image_list_grid_column'}>
-						<div className={'image_list_grid_column_object'}>
-							<img src={NoteBook} alt={'notebook'}/>
-							<div className={'image_list_grid_column_object_hidden'}>
-								<div className={'image_list_grid_column_object_userInfo'}>
-									<img className={'header_user_avatar'} src={loggedUser.photoURL} alt={'userPhoto'}/>
-									<p className={'regular'}>{loggedUser.displayName}</p>
-								</div>
-								<div className={'image_list_grid_column_object_download'}>
-									<BsDownload className={'download_icon'}/>
-								</div>
-								<div className={'image_list_grid_column_object_likes'}>
-									<FcLike className={'like_icon'}/>
-									<span className={'regular like_span'}>13445 Likes</span>
+						{firstColumn.map(imageCard =>
+							<div key={imageCard.url} className={'image_list_grid_column_object'}>
+								<img src={imageCard.url} alt={'image_card'}/>
+								<div className={'image_list_grid_column_object_hidden'}>
+									<div className={'image_list_grid_column_object_userInfo'}>
+										<img className={'header_user_avatar'} src={imageCard.authorPhotoUrl} alt={'userPhoto'}/>
+										<p className={'regular'}>{imageCard.authorDisplayName}</p>
+									</div>
+									<div className={'image_list_grid_column_object_download'}>
+										<BsDownload className={'download_icon'}/>
+									</div>
+									<div className={'image_list_grid_column_object_likes'}>
+										<FcLike className={'like_icon'}/>
+										<span className={'regular like_span'}>{imageCard.likes} Likes</span>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div>
-							<img src={Car} alt={'notebook'}/>
-						</div>
-						<div>
-							<img src={Sea} alt={'notebook'}/>
-						</div>
+						)}
 					</div>
 					<div className={'image_list_grid_column'}>
-						<div>
-							<img src={Girl} alt={'notebook'}/>
-						</div>
-						<div>
-							<img src={WindowImage} alt={'notebook'}/>
-						</div>
-						<div>
-							<img src={NoteBook} alt={'notebook 2'}/>
-						</div>
+						{secondColumn.map(imageCard =>
+							<div key={imageCard.url} className={'image_list_grid_column_object'}>
+								<img src={imageCard.url} alt={'image_card'}/>
+								<div className={'image_list_grid_column_object_hidden'}>
+									<div className={'image_list_grid_column_object_userInfo'}>
+										<img className={'header_user_avatar'} src={imageCard.authorPhotoUrl} alt={'userPhoto'}/>
+										<p className={'regular'}>{imageCard.authorDisplayName}</p>
+									</div>
+									<div className={'image_list_grid_column_object_download'}>
+										<BsDownload className={'download_icon'}/>
+									</div>
+									<div className={'image_list_grid_column_object_likes'}>
+										<FcLike className={'like_icon'}/>
+										<span className={'regular like_span'}>{imageCard.likes} Likes</span>
+									</div>
+								</div>
+							</div>
+						)}
 					</div>
 					<div className={'image_list_grid_column'}>
-						<div>
-							<img src={Sea} alt={'notebook'}/>
-						</div>
-						<div>
-							<img src={Wear} alt={'notebook'}/>
-						</div>
-						<div>
-							<img src={Girl} alt={'girl'}/>
-						</div>
+						{thirdColumn.map(imageCard =>
+							<div key={imageCard.url} className={'image_list_grid_column_object'}>
+								<img src={imageCard.url} alt={'image_card'}/>
+								<div className={'image_list_grid_column_object_hidden'}>
+									<div className={'image_list_grid_column_object_userInfo'}>
+										<img className={'header_user_avatar'} src={imageCard.authorPhotoUrl} alt={'userPhoto'}/>
+										<p className={'regular'}>{imageCard.authorDisplayName}</p>
+									</div>
+									<div className={'image_list_grid_column_object_download'}>
+										<BsDownload className={'download_icon'}/>
+									</div>
+									<div className={'image_list_grid_column_object_likes'}>
+										<FcLike className={'like_icon'}/>
+										<span className={'regular like_span'}>{imageCard.likes} Likes</span>
+									</div>
+								</div>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
