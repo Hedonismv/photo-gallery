@@ -7,6 +7,21 @@
   font-size: 24px;
 }
 
+.small{
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.regular{
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.title_text{
+  font-size: 36px;
+  font-weight: bold;
+}
+
 .container{
   max-width: 1190px;
   margin:auto;

@@ -5,34 +5,12 @@ import {auth} from "../../firebase/config";
 import {useSignInWithGoogle} from "react-firebase-hooks/auth";
 import {useDispatch, useSelector} from "react-redux";
 import {logoutUser} from "../../redux/actions/authActions";
+import {NavLink} from "react-router-dom";
 
 const Header = () => {
 	const dispatch = useDispatch()
 	const {loggedUser} = useSelector(state => state.authReducer)
 	const [signInWithGoogle] = useSignInWithGoogle(auth)
-
-
-
-	// const signInWithGoogle = () => {
-	// 	signInWithPopup(auth, provider)
-	// 		.then((result) => {
-	// 			// This gives you a Google Access Token. You can use it to access the Google API.
-	// 			const credential = GoogleAuthProvider.credentialFromResult(result);
-	// 			const token = credential.accessToken;
-	// 			// The signed-in user info.
-	// 			const user = result.user;
-	// 			console.log(user, token)
-	// 		}).catch((error) => {
-	// 		// Handle Errors here.
-	// 		const errorCode = error.code;
-	// 		const errorMessage = error.message;
-	// 		// The email of the user's account used.
-	// 		const email = error.email;
-	// 		// The AuthCredential type that was used.
-	// 		const credential = GoogleAuthProvider.credentialFromError(error);
-	// 		// ...
-	// 	});
-	// }
 
 	const logout = () => {
 		signOut(auth);
@@ -42,12 +20,27 @@ const Header = () => {
 
 	return (
 		<div className={'header_container'}>
-			<div>
+			<div className={'header_logo'}>
+				<h1>Simple Images</h1>
+			</div>
+			<div className={'header_links'}>
+				<NavLink to={'/information'}>Information</NavLink>
+				{loggedUser &&
+					<>
+						<NavLink to={'/my-images'}>My Images</NavLink>
+						<NavLink to={'/my-profile'}>My Profile</NavLink>
+					</>
+				}
+			</div>
+			<div className={'header_user_block'}>
+				{loggedUser && <p className={'header_auth header_logout'} onClick={logout}>Logout</p>}
 				{loggedUser ?
-					<p className={'header_auth'}>Welcome {loggedUser.displayName}</p>
+					<div className={'header_user_block_info'}>
+						<p className={'header_auth'}>{loggedUser.displayName}</p>
+						<img className={'header_user_avatar'} src={loggedUser.photoURL} alt={'userPhoto'}/>
+					</div>
 					: <p className={'header_auth'} onClick={() => signInWithGoogle()}>Login</p>
 				}
-				{loggedUser && <p className={'header_auth'} onClick={logout}>Logout</p>}
 			</div>
 		</div>
 	);
