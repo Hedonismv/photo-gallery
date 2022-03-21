@@ -1,7 +1,9 @@
 import React, {useContext, useState} from 'react';
-import ProgressBar from "./ProgressBar";
-import {FileContext} from "../context/FileContext";
-import {AiOutlinePlusCircle} from 'react-icons/ai'
+import ProgressBar from "../ProgressBar";
+import {FileContext} from "../../context/FileContext";
+import {AiOutlinePlusCircle} from 'react-icons/ai';
+import '../gallery.css';
+import './fileUploadForm.css';
 
 const FileUploadForm = () => {
 	// const [file, setFile] = useState(null)
@@ -25,7 +27,7 @@ const FileUploadForm = () => {
 	}
 
 	return (
-		<form>
+		<form className={'upload_form'}>
 			<label htmlFor={'upload'}>
 				<input id={'upload'} hidden type={'file'} onChange={(e) => changeHandler(e)}/>
 				<span><AiOutlinePlusCircle className={'file_upload_input'}/></span>

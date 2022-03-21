@@ -1,0 +1,51 @@
+.header_container{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 100px;
+    background-color: white;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.header_auth{
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.header_logout{
+    margin-right: 50px;
+}
+
+.header_user_block_info p{
+    margin-right: 20px;
+}
+
+.header_links a{
+    margin: 0 15px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.header_logo h1{
+    font-size: 36px;
+    padding: 0;
+    margin: 0;
+}
+
+.header_user_avatar{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.header_user_block{
+    display: flex;
+    flex-direction: row;
+}
+
+.header_user_block_info{
+    display: flex;
+    flex-direction: row;
+}
