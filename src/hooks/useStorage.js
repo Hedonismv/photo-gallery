@@ -4,6 +4,7 @@ import {projectFirestore, projectStorage, timestamp} from "../firebase/config";
 import {collection, addDoc} from 'firebase/firestore'
 import { getIdTokenResult} from 'firebase/auth'
 import {useSelector} from "react-redux";
+import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 
 
 export const useStorage = (file) => {
@@ -53,6 +54,7 @@ export const useStorage = (file) => {
 				const createdAt = Date.now().toFixed()
 				addDoc(firestoreRef, {
 					url: downloadURL,
+					imageId: generateUniqueID(),
 					authorId: loggedUser.uid,
 					authorDisplayName: loggedUser.displayName,
 					authorEmail: loggedUser.email,

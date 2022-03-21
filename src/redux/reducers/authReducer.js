@@ -3,7 +3,7 @@ import {LOGOUT, SET_USER, SET_VALUES} from "../actions/authActions";
 const initialState = {
 	loggedUser: null,
 	isLogin: false,
-	values: []
+	imageData: []
 }
 
 
@@ -24,7 +24,7 @@ export const authReducer = (state=initialState, action) => {
 		case SET_VALUES:
 			return{
 				...state,
-				values: action.payload
+				imageData: action.payload
 			}
 		default:
 			return state

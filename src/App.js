@@ -20,12 +20,17 @@ function App() {
 
 
 	const [user, loading, error] = useAuthState(auth)
+	const [value] = useCollectionData(collection(projectFirestore, 'users'))
 
 	useEffect(() => {
-		if(user){
-			dispatch(setUserAuth(user))
+		if(user && value){
+			const dbUser = value.find(usr => usr.uid === user.uid)
+			console.log('DBUSER', dbUser)
+			const readyData = {...user, liked: dbUser.liked}
+			console.log('ReadyData', readyData)
+			dispatch(setUserAuth(readyData))
 		}
-	},[user, dispatch])
+	},[user, dispatch, value])
 
 	if(loading){
 		return (
