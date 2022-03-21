@@ -1,9 +1,5 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {getStorage, ref, listAll, getDownloadURL, list} from "firebase/storage";
+import React, { useEffect, useState} from 'react';
 import '../gallery.css';
-import {FileContext} from "../../context/FileContext";
-import Pagination from "../Pagination/Pagination";
-import {PaginationContext} from "../../context/PaginationContext";
 import './ImageList.css';
 
 //react-icons
@@ -11,13 +7,7 @@ import {FcLike, FcLikePlaceholder} from 'react-icons/fc';
 import {BsDownload} from 'react-icons/bs'
 
 //mock data images
-import Sea from '../../testImages/glauber-sampaio-KGuljhjLRMw-unsplash.jpg';
-import Wear from '../../testImages/kate-hliznitsova-pxUky4mk0FI-unsplash.jpg';
-import Girl from '../../testImages/nicholas-ng-lN-fwWY2UxY-unsplash.jpg';
-import NoteBook from '../../testImages/windows-aeVCU-vit3o-unsplash.jpg';
-import WindowImage from '../../testImages/surface-nC35efkdYBg-unsplash.jpg';
-import Car from '../../testImages/nastaran-taghipour-4O7Gfyfoo1Q-unsplash.jpg';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useCollectionData} from "react-firebase-hooks/firestore";
 import {collection} from "firebase/firestore";
 import {projectFirestore} from "../../firebase/config";
