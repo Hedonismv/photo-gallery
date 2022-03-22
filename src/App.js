@@ -1,13 +1,13 @@
 import './App.css';
 import Header from "./Components/Header/Header";
 import {useAuthState} from "react-firebase-hooks/auth";
-import {useCollection, useCollectionData} from 'react-firebase-hooks/firestore'
+import {useCollection} from 'react-firebase-hooks/firestore'
 import {auth, projectFirestore} from "./firebase/config";
 import {BrowserRouter} from "react-router-dom";
 import {FileContext} from "./context/FileContext";
 import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
-import {setUserAuth, setValues} from "./redux/actions/authActions";
+import {setUserAuth} from "./redux/actions/authActions";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import PublicRoutes from "./routes/PublicRoutes";
 import {collection} from "firebase/firestore";
@@ -20,13 +20,21 @@ function App() {
 
 
 	const [user, loading, error] = useAuthState(auth)
-	const [value] = useCollectionData(collection(projectFirestore, 'users'))
+	const [value] = useCollection(collection(projectFirestore, 'users'))
 
 	useEffect(() => {
 		if(user && value){
-			const dbUser = value.find(usr => usr.uid === user.uid)
+			const values = []
+			value.docs.forEach(doc => {
+				let data = {
+					...doc.data(),
+					id: doc.id
+				}
+				values.push(data)
+			})
+			const dbUser = values.find(usr => usr.uid === user.uid)
 			console.log('DBUSER', dbUser)
-			const readyData = {...user, liked: dbUser.liked}
+			const readyData = {...user, liked: dbUser.liked, id: dbUser.id}
 			console.log('ReadyData', readyData)
 			dispatch(setUserAuth(readyData))
 		}

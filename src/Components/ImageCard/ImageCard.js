@@ -2,20 +2,40 @@ import React from 'react';
 import {BsDownload} from "react-icons/bs";
 import {FcLike, FcLikePlaceholder} from "react-icons/fc";
 import {useSelector} from "react-redux";
-import {collection, updateDoc} from 'firebase/firestore'
+import {updateDoc, doc, arrayRemove, arrayUnion} from 'firebase/firestore'
 import {projectFirestore} from "../../firebase/config";
 
 const ImageCard = ({imageCard}) => {
 
 	const {loggedUser} = useSelector(state => state.authReducer)
-	const userFirestoreRef = collection(projectFirestore, 'users')
+
+	const imageRef = doc(projectFirestore, 'images', imageCard.id)
+	const userRef = loggedUser ? doc(projectFirestore, 'users', loggedUser.id) : ''
 
 	const handleLike = () => {
 
+		updateDoc(imageRef, {
+			likes: imageCard.likes + 1
+		})
+			.catch(err => console.log(err));
+
+		updateDoc(userRef, {
+			liked: arrayUnion(imageCard.id)
+		})
+			.catch(err => console.log(err));
 	}
 
 	const handleDislike = () => {
 
+		updateDoc(imageRef, {
+			likes: imageCard.likes - 1
+		})
+			.catch(err => console.log(err));
+
+		updateDoc(userRef, {
+			liked: arrayRemove(imageCard.id)
+		})
+			.catch(err => console.log(err));
 	}
 
 
@@ -31,9 +51,11 @@ const ImageCard = ({imageCard}) => {
 					<BsDownload className={'download_icon'}/>
 				</div>
 				<div className={'image_list_grid_column_object_likes'}>
-					{loggedUser.liked.includes(imageCard.imageId) ?
-						<FcLike className={'like_icon'} onClick={() => handleDislike()}/>
-						: <FcLikePlaceholder className={'like_icon'} onClick={() => handleLike()}/>
+					{loggedUser ?
+						loggedUser.liked.includes(imageCard.id) ?
+								<FcLike className={'like_icon'} onClick={() => handleDislike()}/>
+								: <FcLikePlaceholder className={'like_icon'} onClick={() => handleLike()}/>
+						: null
 					}
 					<span className={'regular like_span'}>{imageCard.likes} Likes</span>
 				</div>
