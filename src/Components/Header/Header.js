@@ -55,7 +55,7 @@ const Header = () => {
 	return (
 		<div className={'header_container'}>
 			<div className={'header_logo'}>
-				<h1>Simple Images</h1>
+				<h1><NavLink to={'/'}>Simple Images</NavLink></h1>
 			</div>
 			<div className={'header_links'}>
 				<NavLink to={'/information'}>Information</NavLink>

@@ -1,20 +1,14 @@
 import React, { useEffect, useState} from 'react';
 import '../gallery.css';
 import './ImageList.css';
-
-//react-icons
-import {FcLike, FcLikePlaceholder} from 'react-icons/fc';
-import {BsDownload} from 'react-icons/bs'
-
-//mock data images
 import {useDispatch, useSelector} from "react-redux";
-import {useCollection, useCollectionData} from "react-firebase-hooks/firestore";
+import {useCollection} from "react-firebase-hooks/firestore";
 import {collection} from "firebase/firestore";
 import {projectFirestore} from "../../firebase/config";
 import {setValues} from "../../redux/actions/authActions";
 import ImageCard from "../ImageCard/ImageCard";
 
-const ImageList = () => {
+const ImageList = ({personal}) => {
 
 	const [firstColumn, setFirstColumn] = useState([])
 	const [secondColumn, setSecondColumn] = useState([])
@@ -25,26 +19,28 @@ const ImageList = () => {
 
 	const dispatch = useDispatch()
 
-	// const [value, loading, error, snapshot] = useCollectionData(
-	// 	collection(projectFirestore, 'images')
-	// )
-	// console.log(value, loading, error, snapshot)
 	const [value, loading, error] = useCollection(
 		collection(projectFirestore, 'images')
 	)
 
-	const {imageData} = useSelector(state => state.authReducer)
+	const {imageData, loggedUser} = useSelector(state => state.authReducer)
 
 
 	const splitArray = () => {
+		let imagesData = [];
+		if(personal){
+			imagesData = imageData.filter(img => img.authorId === loggedUser.uid)
+		}else{
+			imagesData = imageData
+		}
 		//find ceil number
-		let stateNumber = Math.ceil(imageData.length / 3)
+		let stateNumber = Math.ceil(imagesData.length / 3)
 		// Take the arrays
-		let firstColumn = imageData.slice(0, stateNumber)
+		let firstColumn = imagesData.slice(0, stateNumber)
 		setFirstColumn(firstColumn)
-		let secondColumn = imageData.slice(stateNumber, stateNumber*2)
+		let secondColumn = imagesData.slice(stateNumber, stateNumber*2)
 		setSecondColumn(secondColumn)
-		let thirdColumn = imageData.slice(stateNumber*2, stateNumber*3)
+		let thirdColumn = imagesData.slice(stateNumber*2, stateNumber*3)
 		setThirdColumn(thirdColumn)
 
 		console.log(firstColumn, secondColumn, thirdColumn)

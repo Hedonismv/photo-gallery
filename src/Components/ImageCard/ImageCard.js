@@ -4,6 +4,7 @@ import {FcLike, FcLikePlaceholder} from "react-icons/fc";
 import {useSelector} from "react-redux";
 import {updateDoc, doc, arrayRemove, arrayUnion} from 'firebase/firestore'
 import {projectFirestore} from "../../firebase/config";
+import {saveAs} from 'file-saver';
 
 const ImageCard = ({imageCard}) => {
 
@@ -11,6 +12,11 @@ const ImageCard = ({imageCard}) => {
 
 	const imageRef = doc(projectFirestore, 'images', imageCard.id)
 	const userRef = loggedUser ? doc(projectFirestore, 'users', loggedUser.id) : ''
+
+
+	const downloadImage = () => {
+		saveAs(imageCard.url, 'simpleImages.jpg')
+	}
 
 	const handleLike = () => {
 
@@ -48,7 +54,7 @@ const ImageCard = ({imageCard}) => {
 					<p className={'regular'}>{imageCard.authorDisplayName}</p>
 				</div>
 				<div className={'image_list_grid_column_object_download'}>
-					<BsDownload className={'download_icon'}/>
+					<BsDownload className={'download_icon'} onClick={downloadImage}/>
 				</div>
 				<div className={'image_list_grid_column_object_likes'}>
 					{loggedUser ?
