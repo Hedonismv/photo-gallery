@@ -2,7 +2,7 @@ import './App.css';
 import Header from "./Components/Header/Header";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {useCollection} from 'react-firebase-hooks/firestore'
-import {auth, projectFirestore} from "./firebase/config";
+import {auth, projectFirestore} from './firebaseConfig/config.js';
 import {BrowserRouter} from "react-router-dom";
 import {FileContext} from "./context/FileContext";
 import {useEffect, useState} from "react";
