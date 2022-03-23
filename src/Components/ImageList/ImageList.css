@@ -1,7 +1,10 @@
 .like_icon{
     font-size: 40px;
 }
-
+.delete_icon{
+    font-size: 40px;
+    color: white;
+}
 .download_icon{
     color: white;
     font-size: 30px;
@@ -45,6 +48,13 @@
     z-index: 10;
     top: 70%;
     left: 5%;
+}
+
+.image_list_grid_column_object_delete{
+    position: absolute;
+    z-index: 10;
+    top: 70%;
+    left: 80%;
 }
 .image_list_grid_column_object_likes span{
     margin-top: 10px;

@@ -1,65 +1,69 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {getStorage, ref, listAll, getDownloadURL, list} from "firebase/storage";
+import React, { useEffect, useState} from 'react';
 import '../gallery.css';
-import {FileContext} from "../../context/FileContext";
-import Pagination from "../Pagination/Pagination";
-import {PaginationContext} from "../../context/PaginationContext";
 import './ImageList.css';
-
-//react-icons
-import {FcLike, FcLikePlaceholder} from 'react-icons/fc';
-import {BsDownload} from 'react-icons/bs'
-
-//mock data images
-import Sea from '../../testImages/glauber-sampaio-KGuljhjLRMw-unsplash.jpg';
-import Wear from '../../testImages/kate-hliznitsova-pxUky4mk0FI-unsplash.jpg';
-import Girl from '../../testImages/nicholas-ng-lN-fwWY2UxY-unsplash.jpg';
-import NoteBook from '../../testImages/windows-aeVCU-vit3o-unsplash.jpg';
-import WindowImage from '../../testImages/surface-nC35efkdYBg-unsplash.jpg';
-import Car from '../../testImages/nastaran-taghipour-4O7Gfyfoo1Q-unsplash.jpg';
 import {useDispatch, useSelector} from "react-redux";
-import {useCollectionData} from "react-firebase-hooks/firestore";
+import {useCollection} from "react-firebase-hooks/firestore";
 import {collection} from "firebase/firestore";
 import {projectFirestore} from "../../firebase/config";
 import {setValues} from "../../redux/actions/authActions";
+import ImageCard from "../ImageCard/ImageCard";
 
-const ImageList = () => {
-	// const [files, setFiles] = useState([])
-	// const [curFiles, setCurFiles] = useState([])
-	// const [file] = useContext(FileContext)
-	// const [pages, setPages] = useState([])
-	// const [currentPage, setCurrentPage, totalPages, setTotalPages] = useContext(PaginationContext)
+const ImageList = ({personal}) => {
 
 	const [firstColumn, setFirstColumn] = useState([])
 	const [secondColumn, setSecondColumn] = useState([])
 	const [thirdColumn, setThirdColumn] = useState([])
 
+
+
+
 	const dispatch = useDispatch()
 
-	const [value, loading, error, snapshot] = useCollectionData(
+	const [value, loading, error] = useCollection(
 		collection(projectFirestore, 'images')
 	)
-	console.log(value, loading, error, snapshot)
+
+	const {imageData, loggedUser} = useSelector(state => state.authReducer)
+
 
 	const splitArray = () => {
+		let imagesData = [];
+		if(personal){
+			imagesData = imageData.filter(img => img.authorId === loggedUser.uid)
+		}else{
+			imagesData = imageData
+		}
 		//find ceil number
-		let stateNumber = Math.ceil(value.length / 3)
+		let stateNumber = Math.ceil(imagesData.length / 3)
 		// Take the arrays
-		let firstColumn = value.slice(0, stateNumber)
+		let firstColumn = imagesData.slice(0, stateNumber)
 		setFirstColumn(firstColumn)
-		let secondColumn = value.slice(stateNumber, stateNumber*2)
+		let secondColumn = imagesData.slice(stateNumber, stateNumber*2)
 		setSecondColumn(secondColumn)
-		let thirdColumn = value.slice(stateNumber*2, stateNumber*3)
+		let thirdColumn = imagesData.slice(stateNumber*2, stateNumber*3)
 		setThirdColumn(thirdColumn)
 
 		console.log(firstColumn, secondColumn, thirdColumn)
 	}
 
+	useEffect(() => {
+		if(imageData){
+			splitArray()
+		}
+	}, [imageData])
+
 
 	useEffect(() => {
 		if(value){
-			dispatch(setValues(value))
-			splitArray()
+			const values = []
+			value.docs.forEach(doc => {
+				let data = {
+					...doc.data(),
+					id: doc.id
+				}
+				values.push(data)
+			})
+			dispatch(setValues(values))
 		}
 	},[value, dispatch])
 
@@ -85,62 +89,17 @@ const ImageList = () => {
 				<div className={'image_list_grid'}>
 					<div className={'image_list_grid_column'}>
 						{firstColumn.map(imageCard =>
-							<div key={imageCard.url} className={'image_list_grid_column_object'}>
-								<img src={imageCard.url} alt={'image_card'}/>
-								<div className={'image_list_grid_column_object_hidden'}>
-									<div className={'image_list_grid_column_object_userInfo'}>
-										<img className={'header_user_avatar'} src={imageCard.authorPhotoUrl} alt={'userPhoto'}/>
-										<p className={'regular'}>{imageCard.authorDisplayName}</p>
-									</div>
-									<div className={'image_list_grid_column_object_download'}>
-										<BsDownload className={'download_icon'}/>
-									</div>
-									<div className={'image_list_grid_column_object_likes'}>
-										<FcLike className={'like_icon'}/>
-										<span className={'regular like_span'}>{imageCard.likes} Likes</span>
-									</div>
-								</div>
-							</div>
+							<ImageCard personal={personal} key={imageCard.id} imageCard={imageCard}/>
 						)}
 					</div>
 					<div className={'image_list_grid_column'}>
 						{secondColumn.map(imageCard =>
-							<div key={imageCard.url} className={'image_list_grid_column_object'}>
-								<img src={imageCard.url} alt={'image_card'}/>
-								<div className={'image_list_grid_column_object_hidden'}>
-									<div className={'image_list_grid_column_object_userInfo'}>
-										<img className={'header_user_avatar'} src={imageCard.authorPhotoUrl} alt={'userPhoto'}/>
-										<p className={'regular'}>{imageCard.authorDisplayName}</p>
-									</div>
-									<div className={'image_list_grid_column_object_download'}>
-										<BsDownload className={'download_icon'}/>
-									</div>
-									<div className={'image_list_grid_column_object_likes'}>
-										<FcLike className={'like_icon'}/>
-										<span className={'regular like_span'}>{imageCard.likes} Likes</span>
-									</div>
-								</div>
-							</div>
+							<ImageCard personal={personal} key={imageCard.id} imageCard={imageCard}/>
 						)}
 					</div>
 					<div className={'image_list_grid_column'}>
 						{thirdColumn.map(imageCard =>
-							<div key={imageCard.url} className={'image_list_grid_column_object'}>
-								<img src={imageCard.url} alt={'image_card'}/>
-								<div className={'image_list_grid_column_object_hidden'}>
-									<div className={'image_list_grid_column_object_userInfo'}>
-										<img className={'header_user_avatar'} src={imageCard.authorPhotoUrl} alt={'userPhoto'}/>
-										<p className={'regular'}>{imageCard.authorDisplayName}</p>
-									</div>
-									<div className={'image_list_grid_column_object_download'}>
-										<BsDownload className={'download_icon'}/>
-									</div>
-									<div className={'image_list_grid_column_object_likes'}>
-										<FcLike className={'like_icon'}/>
-										<span className={'regular like_span'}>{imageCard.likes} Likes</span>
-									</div>
-								</div>
-							</div>
+							<ImageCard personal={personal} key={imageCard.id} imageCard={imageCard}/>
 						)}
 					</div>
 				</div>

@@ -19,14 +19,18 @@ const Header = () => {
 	)
 
 	const loginAndSetUser = () => {
-		if(value && value.includes(usr => usr.uid !== user.uid)){
-			console.log('user uid', user.uid)
-			console.log('value')
+		const bool = value.find(usr => usr.uid === user.user.uid)
+		console.log('BOOL', bool)
+		if(bool){
+			console.log('user uid', user.user.uid)
+			console.log('value', value)
+		}else{
 			addDoc(userFirestoreRef, {
 				uid: loggedUser.uid,
 				email: loggedUser.email,
 				displayName: loggedUser.displayName,
-				photoURL: loggedUser.photoURL
+				photoURL: loggedUser.photoURL,
+				liked: []
 			})
 				.then(res => {
 					console.log(res)
@@ -51,7 +55,7 @@ const Header = () => {
 	return (
 		<div className={'header_container'}>
 			<div className={'header_logo'}>
-				<h1>Simple Images</h1>
+				<h1><NavLink to={'/'}>Simple Images</NavLink></h1>
 			</div>
 			<div className={'header_links'}>
 				<NavLink to={'/information'}>Information</NavLink>
