@@ -2,12 +2,14 @@ import React from 'react';
 import {Navigate, Route, Routes} from "react-router";
 import Main from "../Pages/Main/Main";
 import UserImages from "../Pages/UserImages/UserImages";
+import UserProfile from '../Pages/UserProfile/UserProfile';
 
 const PrivateRoutes = () => {
 	return (
 		<Routes>
 			<Route path={'/'} element={<Main/>}/>
 			<Route path={'/my-images'} element={<UserImages/>}/>
+			<Route path={'/my-profile'} element={<UserProfile/>}/>
 			<Route path={'*'} element={<Navigate to={'/'}/>}/>
 		</Routes>
 	);
