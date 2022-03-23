@@ -4,7 +4,7 @@ import './ImageList.css';
 import {useDispatch, useSelector} from "react-redux";
 import {useCollection} from "react-firebase-hooks/firestore";
 import {collection} from "firebase/firestore";
-import {projectFirestore} from "../../firebase/config";
+import {projectFirestore} from "../../firebaseConfig/config.js";
 import {setValues} from "../../redux/actions/authActions";
 import ImageCard from "../ImageCard/ImageCard";
 
