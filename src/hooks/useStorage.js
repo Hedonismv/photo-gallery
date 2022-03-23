@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
-import {projectFirestore, projectStorage, timestamp} from "../firebase/config";
+import {projectFirestore, projectStorage, timestamp} from "../firebaseConfig/config.js";
 import {collection, addDoc} from 'firebase/firestore'
 import { getIdTokenResult} from 'firebase/auth'
 import {useSelector} from "react-redux";
