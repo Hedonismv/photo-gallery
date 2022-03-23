@@ -1,4 +1,5 @@
 import './App.css';
+import React from "react";
 import Header from "./Components/Header/Header";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {useCollection} from 'react-firebase-hooks/firestore'
