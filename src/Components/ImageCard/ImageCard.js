@@ -1,12 +1,13 @@
 import React from 'react';
 import {BsDownload} from "react-icons/bs";
 import {FcLike, FcLikePlaceholder} from "react-icons/fc";
+import {AiTwotoneDelete} from 'react-icons/ai';
 import {useSelector} from "react-redux";
-import {updateDoc, doc, arrayRemove, arrayUnion} from 'firebase/firestore'
+import {updateDoc, doc, arrayRemove, arrayUnion, deleteDoc} from 'firebase/firestore'
 import {projectFirestore} from "../../firebase/config";
 import {saveAs} from 'file-saver';
 
-const ImageCard = ({imageCard}) => {
+const ImageCard = ({imageCard, personal}) => {
 
 	const {loggedUser} = useSelector(state => state.authReducer)
 
@@ -16,6 +17,11 @@ const ImageCard = ({imageCard}) => {
 
 	const downloadImage = () => {
 		saveAs(imageCard.url, 'simpleImages.jpg')
+	}
+
+	const deleteImage = () => {
+		deleteDoc(imageRef)
+			.catch(error => console.log(error))
 	}
 
 	const handleLike = () => {
@@ -65,6 +71,12 @@ const ImageCard = ({imageCard}) => {
 					}
 					<span className={'regular like_span'}>{imageCard.likes} Likes</span>
 				</div>
+				{personal ?
+					<div className={'image_list_grid_column_object_delete'}>
+						<AiTwotoneDelete className={'delete_icon'} onClick={deleteImage}/>
+					</div>
+					: null
+				}
 			</div>
 		</div>
 	);

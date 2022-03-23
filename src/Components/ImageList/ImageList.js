@@ -89,17 +89,17 @@ const ImageList = ({personal}) => {
 				<div className={'image_list_grid'}>
 					<div className={'image_list_grid_column'}>
 						{firstColumn.map(imageCard =>
-							<ImageCard key={imageCard.id} imageCard={imageCard}/>
+							<ImageCard personal={personal} key={imageCard.id} imageCard={imageCard}/>
 						)}
 					</div>
 					<div className={'image_list_grid_column'}>
 						{secondColumn.map(imageCard =>
-							<ImageCard key={imageCard.id} imageCard={imageCard}/>
+							<ImageCard personal={personal} key={imageCard.id} imageCard={imageCard}/>
 						)}
 					</div>
 					<div className={'image_list_grid_column'}>
 						{thirdColumn.map(imageCard =>
-							<ImageCard key={imageCard.id} imageCard={imageCard}/>
+							<ImageCard personal={personal} key={imageCard.id} imageCard={imageCard}/>
 						)}
 					</div>
 				</div>
