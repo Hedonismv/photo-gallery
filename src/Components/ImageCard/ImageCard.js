@@ -53,8 +53,7 @@ const ImageCard = ({imageCard, personal}) => {
 
 	return (
 		<div className={'image_list_grid_column_object'}>
-			<img src={imageCard.url} alt={'image_card'}/>
-			<div className={'image_list_grid_column_object_hidden'}>
+			<div className={'image_list_grid_column_top'}>
 				<div className={'image_list_grid_column_object_userInfo'}>
 					<img className={'header_user_avatar'} src={imageCard.authorPhotoUrl} alt={'userPhoto'}/>
 					<p className={'regular'}>{imageCard.authorDisplayName}</p>
@@ -62,11 +61,14 @@ const ImageCard = ({imageCard, personal}) => {
 				<div className={'image_list_grid_column_object_download'}>
 					<BsDownload className={'download_icon'} onClick={downloadImage}/>
 				</div>
+			</div>
+			<img src={imageCard.url} alt={'image_card'}/>
+			<div className={'image_list_grid_column_top'}>
 				<div className={'image_list_grid_column_object_likes'}>
 					{loggedUser ?
 						loggedUser.liked.includes(imageCard.id) ?
-								<FcLike className={'like_icon'} onClick={() => handleDislike()}/>
-								: <FcLikePlaceholder className={'like_icon'} onClick={() => handleLike()}/>
+							<FcLike className={'like_icon'} onClick={() => handleDislike()}/>
+							: <FcLikePlaceholder className={'like_icon'} onClick={() => handleLike()}/>
 						: null
 					}
 					<span className={'regular like_span'}>{imageCard.likes} Likes</span>

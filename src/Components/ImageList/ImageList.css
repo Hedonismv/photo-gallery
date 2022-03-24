@@ -3,15 +3,21 @@
 }
 .delete_icon{
     font-size: 40px;
-    color: white;
+    color: black;
 }
 .download_icon{
-    color: white;
+    color: black;
     font-size: 30px;
 }
 
 .like_span{
-    color: white;
+    color: black;
+}
+
+.image_list_grid_column_top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .image_list_grid{
@@ -42,68 +48,55 @@
 }
 
 .image_list_grid_column_object_likes{
-    position: absolute;
+    align-items: flex-start;
     display: flex;
     flex-direction: column;
-    z-index: 10;
-    top: 70%;
-    left: 5%;
 }
 
 .image_list_grid_column_object_delete{
-    position: absolute;
-    z-index: 10;
-    top: 70%;
-    left: 80%;
+    align-self: flex-start;
 }
 .image_list_grid_column_object_likes span{
     margin-top: 10px;
 }
 
 .image_list_grid_column_object_download{
-    position: absolute;
     display: flex;
-    flex-direction: column;
-    z-index: 10;
-    top: 4%;
-    left: 85%;
+    align-items: center;
 }
 
 .image_list_grid_column_object_userInfo{
-    position: absolute;
     display: flex;
     flex-direction: row;
-    z-index: 10;
-    top: 2%;
-    left: 1%;
     color: white;
 }
 
 .image_list_grid_column_object_userInfo p{
     margin-left: 10px;
+    color: black;
 }
 
-.image_list_grid_column_object::before{
-    background: rgba(0,0,0,.5);
-    z-index: 10;
-    opacity: 0;
-    visibility: hidden;
-    content: '';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    pointer-events: none;
-    transition: .3s;
-}
+/*.image_list_grid_column_object::before{*/
+/*    background: rgba(0,0,0,.5);*/
+/*    z-index: 10;*/
+/*    opacity: 0;*/
+/*    visibility: hidden;*/
+/*    content: '';*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    position: absolute;*/
+/*    left: 0;*/
+/*    top: 0;*/
+/*    pointer-events: none;*/
+/*    transition: .3s;*/
+/*}*/
 
-.image_list_grid_column_object:hover:before{
-    opacity: 1;
-    visibility: visible;
-}
+/*.image_list_grid_column_object:hover:before{*/
+/*    opacity: 1;*/
+/*    visibility: visible;*/
+/*}*/
 
-.image_list_grid_column_object:hover .image_list_grid_column_object_hidden{
-    opacity: 1;
-    visibility: visible;
-}
+/*.image_list_grid_column_object:hover .image_list_grid_column_object_hidden{*/
+/*    opacity: 1;*/
+/*    visibility: visible;*/
+/*}*/
