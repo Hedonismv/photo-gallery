@@ -6,6 +6,7 @@ import {useSelector} from "react-redux";
 import {updateDoc, doc, arrayRemove, arrayUnion, deleteDoc} from 'firebase/firestore'
 import {projectFirestore} from "../../firebaseConfig/config.js";
 import {saveAs} from 'file-saver';
+import {Link} from "react-router-dom";
 
 const ImageCard = ({imageCard, personal}) => {
 
@@ -55,10 +56,12 @@ const ImageCard = ({imageCard, personal}) => {
 		<div className={'image_list_grid_column_object'}>
 			<img src={imageCard.url} alt={'image_card'}/>
 			<div className={'image_list_grid_column_object_hidden'}>
-				<div className={'image_list_grid_column_object_userInfo'}>
-					<img className={'header_user_avatar'} src={imageCard.authorPhotoUrl} alt={'userPhoto'}/>
-					<p className={'regular'}>{imageCard.authorDisplayName}</p>
-				</div>
+				<Link to={`profile/${imageCard.authorID}`}>
+					<div className={'image_list_grid_column_object_userInfo'}>
+						<img className={'header_user_avatar'} src={imageCard.authorPhotoUrl} alt={'userPhoto'}/>
+						<p className={'regular'}>{imageCard.authorDisplayName}</p>
+					</div>
+				</Link>
 				<div className={'image_list_grid_column_object_download'}>
 					<BsDownload className={'download_icon'} onClick={downloadImage}/>
 				</div>
