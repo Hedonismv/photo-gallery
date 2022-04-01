@@ -11,7 +11,7 @@ import {useDispatch} from "react-redux";
 import {setUserAuth} from "./redux/actions/authActions";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import PublicRoutes from "./routes/PublicRoutes";
-import {collection} from "firebase/firestore";
+import {collection, doc, updateDoc} from "firebase/firestore";
 
 
 function App() {
@@ -25,19 +25,36 @@ function App() {
 
 	useEffect(() => {
 		if(user && value){
-			const values = []
-			value.docs.forEach(doc => {
-				let data = {
-					...doc.data(),
-					id: doc.id
+			console.log(user)
+			console.log('value Tot samy',value.empty)
+			if(!value.empty){
+				const values = []
+				value.docs.forEach(doc => {
+					let data = {
+						...doc.data(),
+						id: doc.id
+					}
+					values.push(data)
+				})
+				const dbUser = values.find(usr => usr.uid === user.uid)
+				console.log('DBUSER', dbUser)
+				if (dbUser){
+					const dbUserRef = doc(projectFirestore, 'users', dbUser.id)
+					updateDoc(dbUserRef, {
+						id: dbUser.id
+					})
+						.catch(error => console.log(error));
+					const readyData = {
+						...user,
+						liked: dbUser.liked,
+						id: dbUser.id,
+						followers: dbUser.followers,
+						following: dbUser.following
+					}
+					console.log('ReadyData', readyData)
+					dispatch(setUserAuth(readyData))
 				}
-				values.push(data)
-			})
-			const dbUser = values.find(usr => usr.uid === user.uid)
-			console.log('DBUSER', dbUser)
-			const readyData = {...user, liked: dbUser.liked, id: dbUser.id}
-			console.log('ReadyData', readyData)
-			dispatch(setUserAuth(readyData))
+			}
 		}
 	},[user, dispatch, value])
 
