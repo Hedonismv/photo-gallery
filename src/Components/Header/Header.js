@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import "./Header.css";
 import { signOut} from "firebase/auth"
-import {auth, projectFirestore} from "../../firebaseConfig/config.js";
+import {auth, projectFirestore, userFirestoreRef} from "../../firebaseConfig/config.js";
 import {useSignInWithGoogle} from "react-firebase-hooks/auth";
 import {useDispatch, useSelector} from "react-redux";
 import {logoutUser} from "../../redux/actions/authActions";
@@ -13,11 +13,10 @@ const Header = () => {
 	const dispatch = useDispatch()
 	const {loggedUser} = useSelector(state => state.authReducer)
 	const [signInWithGoogle, user] = useSignInWithGoogle(auth)
-	const userFirestoreRef = collection(projectFirestore, 'users')
+
 	const [value] = useCollectionData(
 		collection(projectFirestore, 'users')
 	)
-
 	const loginAndSetUser = () => {
 		const bool = value.find(usr => usr.uid === user.user.uid)
 		console.log('BOOL', bool)
@@ -25,11 +24,14 @@ const Header = () => {
 			console.log('user uid', user.user.uid)
 			console.log('value', value)
 		}else{
+			console.log('working here', user.user.displayName)
 			addDoc(userFirestoreRef, {
-				uid: loggedUser.uid,
-				email: loggedUser.email,
-				displayName: loggedUser.displayName,
-				photoURL: loggedUser.photoURL,
+				uid: user.user.uid,
+				email: user.user.email,
+				displayName: user.user.displayName,
+				photoURL: user.user.photoURL,
+				followers: [],
+				following: [],
 				liked: []
 			})
 				.then(res => {
