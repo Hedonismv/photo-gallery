@@ -13,6 +13,11 @@
 .like_span{
     color: white;
 }
+.empty_image_list{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .image_list_grid{
     grid-column-gap: 24px;
