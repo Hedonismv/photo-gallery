@@ -54,8 +54,8 @@ export const useStorage = (file) => {
 				const createdAt = Date.now().toFixed()
 				addDoc(firestoreRef, {
 					url: downloadURL,
-					imageId: generateUniqueID(),
-					authorId: loggedUser.uid,
+					authorUID: loggedUser.uid,
+					authorID: loggedUser.id,
 					authorDisplayName: loggedUser.displayName,
 					authorEmail: loggedUser.email,
 					authorPhotoUrl: loggedUser.photoURL,
