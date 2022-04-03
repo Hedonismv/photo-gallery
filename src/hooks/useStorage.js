@@ -29,6 +29,8 @@ export const useStorage = (file) => {
 				case 'running':
 					console.log('Upload is running');
 					break;
+				default:
+					return
 			}
 		}, (error) => {
 			setError(error)
@@ -45,6 +47,8 @@ export const useStorage = (file) => {
 				case 'storage/unknown':
 					// Unknown error occurred, inspect error.serverResponse
 					break;
+				default:
+					return
 			}
 		}, () => {
 			// Upload completed successfully, now we can get the download URL
