@@ -4,7 +4,7 @@ import './ImageList.css';
 import {useDispatch, useSelector} from "react-redux";
 import {useCollection} from "react-firebase-hooks/firestore";
 import {collection} from "firebase/firestore";
-import {projectFirestore} from "../../firebaseConfig/config.js";
+import {projectFirestore} from "../../firebaseConfig/firestoreConfig.js";
 import {setValues} from "../../redux/actions/authActions";
 import ImageCard from "../ImageCard/ImageCard";
 import {useParams} from "react-router";
@@ -30,7 +30,7 @@ const ImageList = ({personal, profileView}) => {
 
 
 	const memoizedSplit = useCallback( () => {
-		let imagesData = [];
+		let imagesData;
 		if(personal){
 			imagesData = imageData.filter(img => img.authorUID === loggedUser.uid)
 		}else if(profileView){

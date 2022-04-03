@@ -1,10 +1,8 @@
 import {useEffect, useState} from "react";
 import {ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
-import {projectFirestore, projectStorage, timestamp} from "../firebaseConfig/config.js";
+import {projectFirestore, projectStorage} from "../firebaseConfig/firestoreConfig.js";
 import {collection, addDoc} from 'firebase/firestore'
-import { getIdTokenResult} from 'firebase/auth'
 import {useSelector} from "react-redux";
-import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 
 
 export const useStorage = (file) => {

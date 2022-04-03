@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './tUserProfile.css';
-import {useCollection, useDocumentData} from "react-firebase-hooks/firestore";
-import {arrayRemove, arrayUnion, collection, doc, updateDoc} from "firebase/firestore";
-import {projectFirestore, userFirestoreRef} from "../../firebaseConfig/config";
+import {useDocumentData} from "react-firebase-hooks/firestore";
+import {arrayRemove, arrayUnion, doc, updateDoc} from "firebase/firestore";
+import {projectFirestore} from "../../firebaseConfig/firestoreConfig";
 import {useParams} from "react-router";
 import ImageList from "../../Components/ImageList/ImageList";
 import {useSelector} from "react-redux";

@@ -3,7 +3,7 @@ import React from "react";
 import Header from "./Components/Header/Header";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {useCollection} from 'react-firebase-hooks/firestore'
-import {auth, projectFirestore} from './firebaseConfig/config.js';
+import {auth, projectFirestore} from './firebaseConfig/firestoreConfig.js';
 import {BrowserRouter} from "react-router-dom";
 import {FileContext} from "./context/FileContext";
 import {useEffect, useState} from "react";

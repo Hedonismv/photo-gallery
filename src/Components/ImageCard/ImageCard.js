@@ -4,7 +4,7 @@ import {FcLike, FcLikePlaceholder} from "react-icons/fc";
 import {AiTwotoneDelete} from 'react-icons/ai';
 import {useSelector} from "react-redux";
 import {updateDoc, doc, arrayRemove, arrayUnion, deleteDoc} from 'firebase/firestore'
-import {projectFirestore} from "../../firebaseConfig/config.js";
+import {projectFirestore} from "../../firebaseConfig/firestoreConfig.js";
 import {saveAs} from 'file-saver';
 import {Link} from "react-router-dom";
 

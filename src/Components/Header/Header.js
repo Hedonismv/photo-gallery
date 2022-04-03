@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import "./Header.css";
 import { signOut} from "firebase/auth"
-import {auth, projectFirestore, userFirestoreRef} from "../../firebaseConfig/config.js";
+import {auth, projectFirestore, userFirestoreRef} from "../../firebaseConfig/firestoreConfig.js";
 import {useSignInWithGoogle} from "react-firebase-hooks/auth";
 import {useDispatch, useSelector} from "react-redux";
 import {logoutUser} from "../../redux/actions/authActions";
