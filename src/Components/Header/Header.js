@@ -8,11 +8,14 @@ import {logoutUser} from "../../redux/actions/authActions";
 import {NavLink} from "react-router-dom";
 import {useCollectionData} from "react-firebase-hooks/firestore";
 import {addDoc, collection} from "firebase/firestore";
+import useTheme from "../../hooks/useTheme";
 
 const Header = () => {
 	const dispatch = useDispatch()
 	const {loggedUser} = useSelector(state => state.authReducer)
 	const [signInWithGoogle, user] = useSignInWithGoogle(auth)
+
+	const { theme, toggleTheme} = useTheme()
 
 	const [value] = useCollectionData(
 		collection(projectFirestore, 'users')
@@ -55,24 +58,24 @@ const Header = () => {
 	},[user])
 
 	return (
-		<div className={'header_container'}>
+		<div className={`header_container ${theme}`}>
 			<div className={'header_logo'}>
-				<h1><NavLink to={'/'}>Simple Images</NavLink></h1>
+				<h1><NavLink className={theme} to={'/'}>Simple Images</NavLink></h1>
 			</div>
 			<div className={'header_links'}>
-				<NavLink to={'/information'}>Information</NavLink>
+				<NavLink className={theme} to={'/information'}>Information</NavLink>
 				{loggedUser &&
 					<>
-						<NavLink to={'/my-images'}>My Images</NavLink>
-						<NavLink to={'/my-profile'}>My Profile</NavLink>
+						<NavLink className={theme} to={'/my-images'}>My Images</NavLink>
+						<NavLink className={theme} to={'/my-profile'}>My Profile</NavLink>
 					</>
 				}
 			</div>
 			<div className={'header_user_block'}>
-				{loggedUser && <p className={'header_auth header_logout'} onClick={logout}>Logout</p>}
+				{loggedUser && <p className={`header_auth header_logout ${theme}`} onClick={logout}>Logout</p>}
 				{loggedUser ?
 					<div className={'header_user_block_info'}>
-						<p className={'header_auth'}>{loggedUser.displayName}</p>
+						<p className={`header_auth ${theme}`}>{loggedUser.displayName}</p>
 						<img className={'header_user_avatar'} src={loggedUser.photoURL} alt={'userPhoto'}/>
 					</div>
 					: <p className={'header_auth'} onClick={() => signInWithGoogle()}>Login</p>

@@ -1,6 +1,15 @@
 .App {
   text-align: center;
 }
+
+.dark_text{
+  color: white;
+}
+
+.dark{
+  background-color: #444444 !important;
+  color: #ffffff !important;
+}
 .error{
   color: red;
   font-weight: bold;
