@@ -1,0 +1,16 @@
+.user_list_info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.user_list_info p{
+    padding-left: 15px;
+}
+
+.user_item{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+}
