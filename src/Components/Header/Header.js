@@ -15,7 +15,7 @@ const Header = () => {
 	const {loggedUser} = useSelector(state => state.authReducer)
 	const [signInWithGoogle, user] = useSignInWithGoogle(auth)
 
-	const { theme, toggleTheme} = useTheme()
+	const { theme} = useTheme()
 
 	const [value] = useCollectionData(
 		collection(projectFirestore, 'users')
