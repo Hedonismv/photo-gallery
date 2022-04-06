@@ -12,7 +12,7 @@ const UsersList = ({setVisible, usrData, setting}) => {
 				</div>
 				<div className={'modal_user_list'}>
 					{usrData[setting].map(item =>
-						<UserListItem key={item} id={item}/>
+						<UserListItem setVisible={setVisible} key={item} id={item}/>
 					)}
 				</div>
 			</div>
