@@ -1,5 +1,13 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# firebase
+.firebaserc
+.firebase
+.github
+storage.rules
+firebase.json
+firestore.indexes.json
+firestore.rules
 
 # config
 src/firebaseConfig/settings.js
