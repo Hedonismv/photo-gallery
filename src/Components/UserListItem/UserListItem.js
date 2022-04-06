@@ -5,8 +5,9 @@ import {useDocumentData} from "react-firebase-hooks/firestore";
 import './userListItem.css';
 import {useSelector} from "react-redux";
 import {handleSubscribe, handleUnsubscribe} from "../../helpers/subsHandlers";
+import {Link} from "react-router-dom";
 
-const UserListItem = ({id}) => {
+const UserListItem = ({id, setVisible}) => {
 
 	const {loggedUser} = useSelector(state => state.authReducer)
 
@@ -31,10 +32,12 @@ const UserListItem = ({id}) => {
 
 	return (
 		<div className={'user_item'}>
-			<div className={'user_list_info'}>
-				<img className={'header_user_avatar'} src={userProfileData.photoURL} alt={'userPhoto'}/>
-				<p className={'regular'}>{userProfileData.displayName}</p>
-			</div>
+			<Link to={`/profile/${userProfileData.id}`} onClick={() => setVisible(false)}>
+				<div className={'user_list_info'}>
+					<img className={'header_user_avatar'} src={userProfileData.photoURL} alt={'userPhoto'}/>
+					<p className={'regular'}>{userProfileData.displayName}</p>
+				</div>
+			</Link>
 			<div className={'user-profile_sub_btn-container'}>
 				{loggedUser.id === id
 					?
