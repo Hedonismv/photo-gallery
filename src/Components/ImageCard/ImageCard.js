@@ -8,7 +8,7 @@ import {projectFirestore} from "../../firebaseConfig/firestoreConfig.js";
 import {saveAs} from 'file-saver';
 import {Link} from "react-router-dom";
 
-const ImageCard = ({imageCard, personal}) => {
+const ImageCard = ({imageCard, personalView}) => {
 
 	const {loggedUser} = useSelector(state => state.authReducer)
 
@@ -74,7 +74,7 @@ const ImageCard = ({imageCard, personal}) => {
 					}
 					<span className={'regular like_span'}>{imageCard.likes} Likes</span>
 				</div>
-				{personal ?
+				{personalView ?
 					<div className={'image_list_grid_column_object_delete'}>
 						<AiTwotoneDelete className={'delete_icon'} onClick={deleteImage}/>
 					</div>

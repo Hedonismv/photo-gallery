@@ -9,7 +9,7 @@ import {setValues} from "../../redux/actions/authActions";
 import ImageCard from "../ImageCard/ImageCard";
 import {useParams} from "react-router";
 
-const ImageList = ({personal, profileView}) => {
+const ImageList = ({personalView, profileView}) => {
 
 	const params = useParams()
 
@@ -31,7 +31,7 @@ const ImageList = ({personal, profileView}) => {
 
 	const memoizedSplit = useCallback( () => {
 		let imagesData;
-		if(personal){
+		if(personalView){
 			imagesData = imageData.filter(img => img.authorUID === loggedUser.uid)
 		}else if(profileView){
 			imagesData = imageData.filter(img => img.authorID === params.id)
@@ -96,17 +96,17 @@ const ImageList = ({personal, profileView}) => {
 					<div className={'image_list_grid'}>
 						<div className={'image_list_grid_column'}>
 							{firstColumn.map(imageCard =>
-								<ImageCard personal={personal} key={imageCard.id} imageCard={imageCard}/>
+								<ImageCard personalView={personalView} key={imageCard.id} imageCard={imageCard}/>
 							)}
 						</div>
 						<div className={'image_list_grid_column'}>
 							{secondColumn.map(imageCard =>
-								<ImageCard personal={personal} key={imageCard.id} imageCard={imageCard}/>
+								<ImageCard personalView={personalView} key={imageCard.id} imageCard={imageCard}/>
 							)}
 						</div>
 						<div className={'image_list_grid_column'}>
 							{thirdColumn.map(imageCard =>
-								<ImageCard personal={personal} key={imageCard.id} imageCard={imageCard}/>
+								<ImageCard personalView={personalView} key={imageCard.id} imageCard={imageCard}/>
 							)}
 						</div>
 					</div>

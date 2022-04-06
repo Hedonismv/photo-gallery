@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './tUserProfile.css';
 import {useDocumentData} from "react-firebase-hooks/firestore";
 import {doc} from "firebase/firestore";
@@ -19,6 +19,9 @@ const TUserProfile = () => {
 	const [visible, setVisible] = useState(false)
 	const [setting, setSetting] = useState("")
 
+	const [profileView, setProfileView] = useState(false)
+	const [personalView, setPersonalView] = useState(false)
+
 	//Firestore const
 	const profileUserRef = doc(projectFirestore, 'users', params.id)
 	const loggedUserRef = loggedUser ? doc(projectFirestore, 'users', loggedUser.id) : ''
@@ -31,6 +34,17 @@ const TUserProfile = () => {
 		setSetting(setting)
 		setVisible(true)
 	}
+
+
+	useEffect(() => {
+		if(params.id === loggedUser.id){
+			setPersonalView(true)
+			setProfileView(false)
+		}else{
+			setPersonalView(false)
+			setProfileView(true)
+		}
+	},[params, loggedUser])
 
 	if(loading){
 		return (
@@ -58,19 +72,23 @@ const TUserProfile = () => {
 						<p className={'regular'}>{userProfileData.displayName}</p>
 					</div>
 					<div className={'user-profile_sub_btn-container'}>
-						{loggedUser.following.includes(params.id) ?
-							<button
-								className={'user-profile-sub-btn'}
-								onClick={() => handleUnsubscribe(loggedUserRef,profileUserRef, params.id, loggedUser.id)}
-							>
-								Unsubscribe
-							</button>
-							: <button
-								className={'user-profile-sub-btn'}
-								onClick={() => handleSubscribe(loggedUserRef,profileUserRef, params.id, loggedUser.id)}
-							>
-								Subscribe
-							</button>
+						{params.id === loggedUser.id
+							?
+							null
+							:
+							loggedUser.following.includes(params.id) ?
+									<button
+										className={'user-profile-sub-btn'}
+										onClick={() => handleUnsubscribe(loggedUserRef,profileUserRef, params.id, loggedUser.id)}
+									>
+										Unsubscribe
+									</button>
+									: <button
+										className={'user-profile-sub-btn'}
+										onClick={() => handleSubscribe(loggedUserRef,profileUserRef, params.id, loggedUser.id)}
+									>
+										Subscribe
+									</button>
 						}
 					</div>
 				</div>
@@ -79,7 +97,7 @@ const TUserProfile = () => {
 					<span className={'profile_following'} onClick={() => handleVisible("following")}>Following: {userProfileData.following.length}</span>
 				</div>
 			</div>
-			<ImageList profileView={true}/>
+			<ImageList profileView={profileView} personalView={personalView}/>
 		</div>
 	);
 };
