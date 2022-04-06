@@ -66,8 +66,8 @@ const Header = () => {
 				<NavLink className={theme} to={'/information'}>Information</NavLink>
 				{loggedUser &&
 					<>
-						<NavLink className={theme} to={'/my-images'}>My Images</NavLink>
-						<NavLink className={theme} to={'/my-profile'}>My Profile</NavLink>
+						<NavLink className={theme} to={'/direct'}>Direct</NavLink>
+						<NavLink className={theme} to={`/profile/${loggedUser.id}`}>My Profile</NavLink>
 					</>
 				}
 			</div>
