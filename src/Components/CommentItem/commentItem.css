@@ -1,0 +1,44 @@
+.comment_main{
+    display: flex;
+    margin: 34px 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.comment_info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.comment_info_avatar{
+
+}
+
+.comment_info_text span{
+    padding: 0 0 0 15px;
+}
+
+.comment_info_text{
+    padding: 0;
+    margin: 0;
+
+}
+
+.comment_info_date{
+    display: flex;
+    flex-direction: column;
+}
+
+.comment_text{
+    padding: 0 0 0 30px;
+    max-width: 850px;
+    white-space: pre-wrap;
+}
+
+.comment_text_main{
+    white-space: pre-wrap;
+    overflow: hidden;
+    word-break: break-all;
+}
