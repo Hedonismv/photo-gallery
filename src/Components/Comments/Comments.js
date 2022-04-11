@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import './comments.css';
 import CommentItem from "../CommentItem/CommentItem";
 import CommentAddForm from "../CommentAddForm/CommentAddForm";
 import {useCollectionData} from "react-firebase-hooks/firestore";
@@ -46,13 +47,13 @@ const Comments = () => {
 
 	return (
 		<div>
-			<div>
+			<div className={'com_add_form_block'}>
+				<CommentAddForm/>
+			</div>
+			<div className={'comment_list_block'}>
 				{comments.map(comment =>
 					<CommentItem comment={comment} key={comment.createdAt}/>
 				)}
-			</div>
-			<div>
-				<CommentAddForm/>
 			</div>
 		</div>
 	);
