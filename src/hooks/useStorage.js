@@ -53,7 +53,7 @@ export const useStorage = (file) => {
 		}, () => {
 			// Upload completed successfully, now we can get the download URL
 			getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-				const createdAt = Date.now().toFixed()
+				const createdAt = Date.now()
 				addDoc(firestoreRef, {
 					url: downloadURL,
 					authorUID: loggedUser.uid,
