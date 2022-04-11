@@ -10,6 +10,12 @@
   background-color: #444444 !important;
   color: #ffffff !important;
 }
+
+.grey{
+  color: #878787;
+  font-weight: 400;
+  font-size: 16px;
+}
 .error{
   color: red;
   font-weight: bold;
