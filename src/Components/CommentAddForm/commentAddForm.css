@@ -1,3 +1,29 @@
 .comment_add_textarea{
     resize: none;
+    width: 70%;
+    padding: 25px 15px;
+    border-radius: 7px;
+}
+
+.comment_add_form{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0 0 0;
+}
+
+.comment_add_form span{
+    font-size: 16px;
+}
+
+.comment_add_submit{
+    height: 40px;
+    width: 150px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+}
+
+.comment_add_submit:hover{
+    opacity: 0.7;
 }
