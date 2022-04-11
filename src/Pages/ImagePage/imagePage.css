@@ -1,0 +1,39 @@
+.img_page_main{
+    grid-column-gap: 24px;
+    align-items: start;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 40px;
+}
+
+.img_page_image_object{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.img_page_author-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.img_page_author-info p{
+    padding: 0 0 0 15px;
+    margin: 0;
+}
+
+.img_page_author_date{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+}
+.img_page_author-likes{
+
+}
