@@ -82,9 +82,10 @@ const ImageList = ({personalView, profileView}) => {
 	}
 
 	if(error){
+		console.log(error)
 		return (
 			<div>
-				<h1>Error</h1>
+				<h1>{error.message}</h1>
 			</div>
 		)
 	}
